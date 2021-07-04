@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { get } from 'lodash';
 import HttpException from '../exceptions/HttpException';
-import { fetchUploadedImages } from '../service/user.service';
+import { fetchFromUrl } from '../service/user.service';
 
 // Returns the uploaded photo lis of the logged in user
 export const getUploadedPhotosHandler = async (
@@ -16,7 +16,7 @@ export const getUploadedPhotosHandler = async (
       throw new HttpException(401, 'Unauthorized');
     }
 
-    const photoGrid = await fetchUploadedImages(user.email);
+    const photoGrid = await fetchFromUrl(user.email);
 
     if (!photoGrid) {
       return res.sendStatus(404);

@@ -23,7 +23,7 @@ export const routes = (app: Express): void => {
 
   // Get the photo grid of the user
   app.get(
-    '/api/photogrid/:userId',
+    '/api/photogrid',
     passport.authenticate('jwt', { session: false }),
     getPhotoGridHandler
   );

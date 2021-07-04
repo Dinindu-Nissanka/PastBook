@@ -6,7 +6,7 @@ export interface IPhoto {
 }
 
 export interface IPhotoGrid extends Document {
-  userId: string;
+  email: string;
   grid: Array<IPhoto>;
   createdAt: Date;
   updatedAt: Date;
@@ -14,7 +14,7 @@ export interface IPhotoGrid extends Document {
 
 const PhotoGridSchema: Schema = new Schema(
   {
-    userId: {
+    email: {
       type: String,
       required: true,
       unique: true,

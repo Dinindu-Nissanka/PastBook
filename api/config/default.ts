@@ -38,4 +38,7 @@ export default {
     DtkpjGHQzPF6vOe907y5NQLvVFGXUq/FIJZxB8k..fJdHEm2M4=
     -----END RSA PRIVATE KEY-----`,
   },
+  uploadedImages: {
+    url: 'https://dev-pb-apps.s3-eu-west-1.amazonaws.com/collection/CHhASmTpKjaHyAsSaauThRqMMjWanYkQ.json',
+  },
 };

@@ -56,7 +56,7 @@ export const signUpHandler = async (
       const token = jwt.sign({ email }, config.get('jwt.privateKey'), {
         expiresIn: 10000000,
       });
-      res.status(200).json({ name, email, ...{ token } });
+      res.status(201).json({ name, email, ...{ token } });
     } else {
       throw new HttpException(403, 'User already exists with the given email');
     }

@@ -3,6 +3,7 @@ import config from 'config';
 import User from '../model/user.model';
 import { PassportStatic } from 'passport';
 
+// Passport strategy to authetication
 export const applyPassportStrategy = (passport: PassportStatic): void => {
   const jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
   const secretOrKey: string = config.get('jwt.privateKey');
