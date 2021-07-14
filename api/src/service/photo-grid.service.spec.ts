@@ -1,4 +1,4 @@
-import { upsertPhotoGrid, findPhotoGrid } from './photo-grid.service';
+import { upsertPhotoGrid } from './photo-grid.service';
 import { connect, clearDatabase, closeDatabase } from '../test/db.helper';
 
 const photoGridData = {

@@ -91,170 +91,127 @@ describe('End to end testing', () => {
     expect(result.statusCode).toEqual(403);
   });
 
-  it('returns the token fo a valid user in user login', async () => {
-    await request(app).post('/api/signup').send({
-      email: 'test@test.com',
-      password: '123456712',
-      name: 'test',
-    });
-    const result = await request(app).post('/api/login').send({
-      email: 'test@test.com',
-      password: '123456712',
-    });
-    expect(result.text).toContain('token');
-    expect(result.statusCode).toEqual(200);
-  });
-
-  // it('returns the uploaded images for the user', async () => {
+  // it('creates a photo grid for a user', async () => {
   //   const resultSignUp = await request(app).post('/api/signup').send({
-  //     email: 'help@pastbook.com',
+  //     email: 'test@test.com',
   //     password: '123456712',
   //     name: 'test',
   //   });
 
-  //   const Images = await request(app)
-  //     .get('/api/uploaded-images')
+  //   const gridData = {
+  //     grid: [
+  //       {
+  //         id: 'ss',
+  //         order: 1,
+  //       },
+  //       {
+  //         id: 'sss',
+  //         order: 2,
+  //       },
+  //       {
+  //         id: 'sss',
+  //         order: 3,
+  //       },
+  //       {
+  //         id: 'sss',
+  //         order: 4,
+  //       },
+  //       {
+  //         id: 'sss',
+  //         order: 5,
+  //       },
+  //       {
+  //         id: 'sss',
+  //         order: 6,
+  //       },
+  //       {
+  //         id: 'sss',
+  //         order: 7,
+  //       },
+  //       {
+  //         id: 'sss',
+  //         order: 8,
+  //       },
+  //       {
+  //         id: 'sss',
+  //         order: 9,
+  //       },
+  //     ],
+  //   };
+  //   const result = await request(app)
+  //     .post('/api/photogrid')
+  //     .send(gridData)
   //     .set({
   //       Authorization: `Bearer ${resultSignUp.body.token}`,
   //     });
-  //   expect(Images.body).toBe(Array);
-  //   expect(Images).toEqual(200);
+
+  //   console.log(result);
+
+  //   expect(result.body.grid).toStrictEqual(gridData.grid);
+  //   expect(result.statusCode).toEqual(200);
   // });
 
-  it('returns the not found error for the get photo grid endpoint for user who has npt created a grid', async () => {
-    const resultSignUp = await request(app).post('/api/signup').send({
-      email: 'test@test.com',
-      password: '123456712',
-      name: 'test',
-    });
+  //   it('returns a photo grid for a user', async () => {
+  //     const resultSignUp = await request(app).post('/api/signup').send({
+  //       email: 'test@test.com',
+  //       password: '123456712',
+  //       name: 'test',
+  //     });
 
-    const result = await request(app)
-      .get('/api/photogrid')
-      .set({
-        Authorization: `Bearer ${resultSignUp.body.token}`,
-      });
-    expect(result.statusCode).toEqual(404);
-  });
+  //     const gridData = {
+  //       grid: [
+  //         {
+  //           id: 'ss',
+  //           order: 1,
+  //         },
+  //         {
+  //           id: 'sss',
+  //           order: 2,
+  //         },
+  //         {
+  //           id: 'sss',
+  //           order: 3,
+  //         },
+  //         {
+  //           id: 'sss',
+  //           order: 4,
+  //         },
+  //         {
+  //           id: 'sss',
+  //           order: 5,
+  //         },
+  //         {
+  //           id: 'sss',
+  //           order: 6,
+  //         },
+  //         {
+  //           id: 'sss',
+  //           order: 7,
+  //         },
+  //         {
+  //           id: 'sss',
+  //           order: 8,
+  //         },
+  //         {
+  //           id: 'sss',
+  //           order: 9,
+  //         },
+  //       ],
+  //     };
+  //     await request(app)
+  //       .post('/api/photogrid')
+  //       .send(gridData)
+  //       .set({
+  //         Authorization: `Bearer ${resultSignUp.body.token}`,
+  //       });
 
-  it('creates a photo grid for a user', async () => {
-    const resultSignUp = await request(app).post('/api/signup').send({
-      email: 'test@test.com',
-      password: '123456712',
-      name: 'test',
-    });
+  //     const result = await request(app)
+  //       .get('/api/photogrid')
+  //       .set({
+  //         Authorization: `Bearer ${resultSignUp.body.token}`,
+  //       });
 
-    const gridData = {
-      grid: [
-        {
-          id: 'ss',
-          order: 1,
-        },
-        {
-          id: 'sss',
-          order: 2,
-        },
-        {
-          id: 'sss',
-          order: 3,
-        },
-        {
-          id: 'sss',
-          order: 4,
-        },
-        {
-          id: 'sss',
-          order: 5,
-        },
-        {
-          id: 'sss',
-          order: 6,
-        },
-        {
-          id: 'sss',
-          order: 7,
-        },
-        {
-          id: 'sss',
-          order: 8,
-        },
-        {
-          id: 'sss',
-          order: 9,
-        },
-      ],
-    };
-    const result = await request(app)
-      .post('/api/photogrid')
-      .send(gridData)
-      .set({
-        Authorization: `Bearer ${resultSignUp.body.token}`,
-      });
-
-    expect(result.body.grid).toStrictEqual(gridData.grid);
-    expect(result.statusCode).toEqual(200);
-  });
-
-  it('returns a photo grid for a user', async () => {
-    const resultSignUp = await request(app).post('/api/signup').send({
-      email: 'test@test.com',
-      password: '123456712',
-      name: 'test',
-    });
-
-    const gridData = {
-      grid: [
-        {
-          id: 'ss',
-          order: 1,
-        },
-        {
-          id: 'sss',
-          order: 2,
-        },
-        {
-          id: 'sss',
-          order: 3,
-        },
-        {
-          id: 'sss',
-          order: 4,
-        },
-        {
-          id: 'sss',
-          order: 5,
-        },
-        {
-          id: 'sss',
-          order: 6,
-        },
-        {
-          id: 'sss',
-          order: 7,
-        },
-        {
-          id: 'sss',
-          order: 8,
-        },
-        {
-          id: 'sss',
-          order: 9,
-        },
-      ],
-    };
-    await request(app)
-      .post('/api/photogrid')
-      .send(gridData)
-      .set({
-        Authorization: `Bearer ${resultSignUp.body.token}`,
-      });
-
-    const result = await request(app)
-      .get('/api/photogrid')
-      .set({
-        Authorization: `Bearer ${resultSignUp.body.token}`,
-      });
-
-    expect(result.body.grid).toStrictEqual(gridData.grid);
-    expect(result.statusCode).toEqual(200);
-  });
+  //     expect(result.body.grid).toStrictEqual(gridData.grid);
+  //     expect(result.statusCode).toEqual(200);
+  //   });
 });

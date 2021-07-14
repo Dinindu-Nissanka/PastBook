@@ -11,16 +11,16 @@ export const createUser = async (user: IUserInput): Promise<IUser> => {
 };
 
 // Fetch data from the given url
-export const fetchFromUrl = async (
+export const fetchImagesFromUrl = async (
   email: string
 ): Promise<UploadedImagesResponse | null> => {
+  // This email should be validated against the response
+  // or it should be used while fetching data
+  // but since I have given a common url, this email parameter is not needed
   try {
     const response = await axios.get(config.get('uploadedImages.url'));
     const { data } = response;
-    if (data.author && data.author.email && data.author.email === email) {
-      return data.entries;
-    }
-    return null;
+    return data.entries;
   } catch (error) {
     throw new HttpException(
       500,
