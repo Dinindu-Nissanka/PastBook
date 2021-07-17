@@ -6,10 +6,12 @@ import { applyPassportStrategy } from './utils/passport';
 import { errorHandlerMiddleware } from './middleware/error.middleware';
 import swaggerUi from 'swagger-ui-express';
 import swaggerDocument from './docs/swagger.json';
+import cors from 'cors';
 
 const app = express();
 applyPassportStrategy(passport);
 
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(morganMiddleware);
