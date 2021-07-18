@@ -32,7 +32,7 @@ export const Gallery: FC<GalleryProps> = ({
         isSelected: false,
       }))
     );
-  }, []);
+  }, [photos]);
 
   const onSelect = (id: string): void => {
     const isAlreadySelected = images.find(

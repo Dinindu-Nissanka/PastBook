@@ -142,7 +142,7 @@ export const PhotoGrid: FC<PhotoGridProps> = ({
           id={image.id}
           imageUrl={
             photos.find((photo) => photo.id.toString() === image.id)?.picture ||
-            'logo192.png'
+            'error'
           }
           moveCard={moveCard}
         />

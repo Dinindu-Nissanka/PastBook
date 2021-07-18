@@ -28,10 +28,8 @@ const tailFormItemLayout = {
 };
 
 export const SignUp = ({
-  setToken,
   setIsLoginModalOpen,
 }: {
-  setToken: Function;
   setIsLoginModalOpen: Function;
 }) => {
   const [form] = Form.useForm();
@@ -46,7 +44,7 @@ export const SignUp = ({
     if (username && password && name) {
       const tokenResponse = await signUp({ username, password, name });
       if (tokenResponse.token) {
-        setToken(tokenResponse);
+        setIsLoginModalOpen(true);
         notification.success({
           message: 'Successfully created a user',
         });
@@ -151,6 +149,6 @@ export const SignUp = ({
 };
 
 SignUp.propTypes = {
-  setToken: PropTypes.func.isRequired,
+  // setToken: PropTypes.func.isRequired,
   setIsLoginModalOpen: PropTypes.func.isRequired,
 };

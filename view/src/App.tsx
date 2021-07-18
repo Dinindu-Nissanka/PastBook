@@ -38,10 +38,7 @@ function App() {
             />
           )}
           {!token && !isLoginModalOpen && (
-            <SignUp
-              setToken={setToken}
-              setIsLoginModalOpen={setIsLoginModalOpen}
-            />
+            <SignUp setIsLoginModalOpen={setIsLoginModalOpen} />
           )}
           {token && (
             <DndProvider backend={HTML5Backend}>
