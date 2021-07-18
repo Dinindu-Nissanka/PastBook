@@ -25,9 +25,22 @@ node version >= v12.14.0
 - Use the node package manager [npm](https://www.npmjs.com/) to run the unit tests.
 
   ```bash
-
   npm run test
   ```
+
+### Check and Fix linting issues
+
+- Check what are the linting issues by running below command
+
+```bash
+  npm run lint
+```
+
+- Fix those issues by
+
+```bash
+  npm run lint-fix
+```
 
 ### Usage
 
@@ -38,3 +51,11 @@ node version >= v12.14.0
 - New users can be created from the /auth/signup
 
 API documentation can be found from [/api-docs](http://localhost:3333/api-docs) endpoint
+
+### Docker container
+
+- Use the node package manager [npm](https://www.npmjs.com/) to run the backend as a docker container. This would create a mongodb docker image and a backend application docker image. Then would run one instance from each docker image.
+
+```bash
+  npm run docker:up
+```

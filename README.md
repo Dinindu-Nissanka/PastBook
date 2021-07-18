@@ -6,4 +6,4 @@ This is the backend of the application. Please refer to the [Readme](api/README.
 
 ## Frontend
 
-This is the backend of the application. Please refer to the [Readme](frontend/README.md)
+This is the backend of the application. Please refer to the [Readme](view/README.md)
