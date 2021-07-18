@@ -1,0 +1,33 @@
+.gallery {
+  .header {
+    margin-top: 5rem;
+    text-align: center;
+    font-size: 15px;
+    font-family: sans-serif;
+
+    &__title {
+      font-weight: 800;
+      font-size: 25px;
+    }
+
+    &__content {
+      margin-bottom: 2px;
+    }
+  }
+  .container {
+    width: 960px;
+    height: 960px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 5rem;
+    margin-bottom: 10rem;
+
+    &__button {
+      margin-top: 2rem;
+
+      &-save {
+        margin-right: 2rem;
+      }
+    }
+  }
+}
