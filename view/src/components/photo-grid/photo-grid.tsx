@@ -1,6 +1,6 @@
 import { Col, Row, Button } from 'antd';
 import React, { FC, useCallback, useState } from 'react';
-import { Photo } from '../../types/user.type';
+import { Photo } from '../../types/gallery.type';
 import { Grid, GridImage } from '../../types/photo-grid.type';
 import update from 'immutability-helper';
 import { PhotoCard } from './grid-photo';

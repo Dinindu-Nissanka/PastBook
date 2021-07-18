@@ -6,9 +6,9 @@ import {
 } from '../../services/photo-grid.service';
 import { getUserUploadedPhotos } from '../../services/user.service';
 import { Grid, GridImage } from '../../types/photo-grid.type';
-import { Photo } from '../../types/user.type';
+import { Photo } from '../../types/gallery.type';
 import { Gallery } from '../gallery/gallery';
-import { PhotoGrid } from '../gallery/photo-grid';
+import { PhotoGrid } from '../photo-grid/photo-grid';
 
 function Dashboard() {
   const [photoGrid, setPhotoGrid] = useState<Grid | null>(null);

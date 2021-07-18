@@ -1,6 +1,6 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { Col, Row, Button, notification } from 'antd';
-import { Photo } from '../../types/user.type';
+import { Photo, PhotoGallery } from '../../types/gallery.type';
 import './gallery.scss';
 import { GridImage } from '../../types/photo-grid.type';
 import { GalleryPhotoCard } from './gallery-photo';
@@ -18,37 +18,57 @@ export const Gallery: FC<GalleryProps> = ({
   photoGridExists,
   onBack,
 }): JSX.Element => {
-  const [selectedPhotos, setSelectedPhotos] = useState<Array<string>>([]);
-  const [isDisabled, setIsDisabled] = useState<boolean>(true);
+  const [images, setImages] = useState<Array<PhotoGallery>>(
+    photos.map((photo) => ({
+      ...photo,
+      isSelected: false,
+    }))
+  );
+
+  useEffect(() => {
+    setImages(
+      photos.map((photo) => ({
+        ...photo,
+        isSelected: false,
+      }))
+    );
+  }, []);
 
   const onSelect = (id: string): void => {
-    const tempArray = selectedPhotos;
-    const index = tempArray.indexOf(id);
-    if (index > -1) {
-      tempArray.splice(index, 1);
+    const isAlreadySelected = images.find(
+      (image) => image.id.toString() === id && image.isSelected
+    );
+
+    if (isAlreadySelected) {
+      setImages(
+        images.map((image) =>
+          image.id.toString() === id ? { ...image, isSelected: false } : image
+        )
+      );
     } else {
-      if (tempArray.length === 9) {
+      const count = images.filter((image) => image.isSelected === true).length;
+      if (count >= 9) {
         notification.error({
           message: 'Limit exceeded',
           description: 'You can only select 9 photos',
         });
       } else {
-        tempArray.push(id);
+        setImages(
+          images.map((image) =>
+            image.id.toString() === id ? { ...image, isSelected: true } : image
+          )
+        );
       }
-    }
-    setSelectedPhotos(tempArray);
-    if (tempArray.length === 9) {
-      setIsDisabled(false);
-    } else {
-      setIsDisabled(true);
     }
   };
 
   const onGridCreate = async (): Promise<void> => {
-    const grid: Array<GridImage> = selectedPhotos.map((id, index) => ({
-      id,
-      order: index,
-    }));
+    const grid: Array<GridImage> = images
+      .filter((image) => image.isSelected === true)
+      .map((image, index) => ({
+        id: image.id.toString(),
+        order: index,
+      }));
     onSave(grid);
   };
 
@@ -56,14 +76,14 @@ export const Gallery: FC<GalleryProps> = ({
     onBack();
   };
 
-  const renderImage = (image: Photo) => {
+  const renderImage = (image: PhotoGallery) => {
     return (
       <Col key={image.id} className="gutter-row" span={3}>
         <GalleryPhotoCard
           imageUrl={image.picture}
-          // imageUrl="1.png"
           id={image.id.toString()}
           onSelect={onSelect}
+          isSelected={image.isSelected}
         />
       </Col>
     );
@@ -80,12 +100,14 @@ export const Gallery: FC<GalleryProps> = ({
         <p>Please select 9 photos to create your grid</p>
       </div>
       <div className="container">
-        <Row gutter={[8, 8]}>{photos.map((image) => renderImage(image))}</Row>
+        <Row gutter={[8, 8]}>{images.map((image) => renderImage(image))}</Row>
         <div className="container__button">
           <Button
             type="primary"
             className="container__button-save"
-            disabled={isDisabled}
+            disabled={
+              images.filter((image) => image.isSelected === true).length !== 9
+            }
             onClick={onGridCreate}
           >
             Save

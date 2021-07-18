@@ -13,17 +13,6 @@ export const connect = async (): Promise<void> => {
   };
 
   await mongoose.connect(config.get('db.uri'), mongooseOpts);
-
-  // await mongoose.connect(
-  //   mongod.getUri(),
-  //   { useNewUrlParser: true, useCreateIndex: true },
-  //   (err) => {
-  //     if (err) {
-  //       console.error(err);
-  //       process.exit(1);
-  //     }
-  //   }
-  // );
 };
 
 /**

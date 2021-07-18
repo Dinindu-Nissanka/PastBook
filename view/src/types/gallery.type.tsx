@@ -7,3 +7,7 @@ export type Photo = {
   pictureStored: string;
   timestamp: number;
 };
+
+export interface PhotoGallery extends Photo {
+  isSelected: boolean;
+}

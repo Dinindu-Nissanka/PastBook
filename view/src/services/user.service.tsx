@@ -1,4 +1,4 @@
-import { Photo } from '../types/user.type';
+import { Photo } from '../types/gallery.type';
 import { getAuthHeader } from './auth.service';
 
 // Service to get the user uploaded photo list from the backend

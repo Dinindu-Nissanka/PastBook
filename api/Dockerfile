@@ -5,7 +5,7 @@ RUN mkdir -p /usr/app
 WORKDIR /usr/app
 
 COPY package.json /usr/app
-RUN npm install
+RUN npm install --only=production
 
 COPY src /usr/app/src
 COPY types  /usr/app/types
