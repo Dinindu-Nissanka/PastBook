@@ -4,7 +4,7 @@ import { getAuthHeader } from './auth.service';
 // Service to get the user uploaded photo list from the backend
 export const getUserUploadedPhotos = async (): Promise<Array<Photo>> => {
   const authHeader = getAuthHeader();
-  return fetch('http://localhost:3333/api/uploaded-images', {
+  return fetch(`${process.env.REACT_APP_BACKEND_URL}/gallery`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -17,7 +17,7 @@ export const getUserUploadedPhotos = async (): Promise<Array<Photo>> => {
       } else if (response.status === 404) {
         return null;
       } else {
-        throw new Error('Something went wrong');
+        return response;
       }
     })
     .then((data) => (data ? data.json() : null));

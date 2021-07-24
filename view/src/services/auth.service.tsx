@@ -11,7 +11,7 @@ type UserSignUp = {
 
 // Service to call the login endpoint in backend
 export const login = async (loginInput: UserLogin) => {
-  return fetch('http://localhost:3333/api/login', {
+  return fetch(`${process.env.REACT_APP_BACKEND_URL}/login`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -25,7 +25,7 @@ export const login = async (loginInput: UserLogin) => {
 
 //Service to call the sign up endpoint in backend
 export const signUp = async (signUpInput: UserSignUp) => {
-  return fetch('http://localhost:3333/api/signup', {
+  return fetch(`${process.env.REACT_APP_BACKEND_URL}/signup`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

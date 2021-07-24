@@ -1,10 +1,11 @@
 import { notification } from 'antd';
 import React, { useCallback, useEffect, useState } from 'react';
 import {
-  createOrUpdateUserPhotoGrid,
+  updateUserPhotoGrid,
   getUserPhotoGrid,
+  createUserPhotoGrid,
 } from '../../services/photo-grid.service';
-import { getUserUploadedPhotos } from '../../services/user.service';
+import { getUserUploadedPhotos } from '../../services/gallery.service';
 import { Grid, GridImage } from '../../types/photo-grid.type';
 import { Photo } from '../../types/gallery.type';
 import { Gallery } from '../gallery/gallery';
@@ -41,7 +42,7 @@ function Dashboard() {
   }, [fetchUserUploadedPhotos, photoGrid]);
 
   const onPhotoGridUpdate = async (images: Array<GridImage>) => {
-    const response = await createOrUpdateUserPhotoGrid({ grid: images });
+    const response = await updateUserPhotoGrid({ grid: images });
 
     if (response.grid) {
       notification.success({
@@ -57,7 +58,12 @@ function Dashboard() {
   };
 
   const onPhotoGridCreate = async (images: Array<GridImage>) => {
-    const response = await createOrUpdateUserPhotoGrid({ grid: images });
+    let response;
+    if (photoGrid) {
+      response = await updateUserPhotoGrid({ grid: images });
+    } else {
+      response = await createUserPhotoGrid({ grid: images });
+    }
 
     if (response.grid) {
       notification.success({
