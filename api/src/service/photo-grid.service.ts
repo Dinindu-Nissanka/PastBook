@@ -1,20 +1,65 @@
-import PhotoGrid, { IPhotoGrid } from '../model/photo-grid.model';
-import { IPhotoGridInput } from '../types/photo-grid.type';
+import { AlreadyExistsException, NotFoundException } from '../exceptions';
+import PhotoGridModel, { RawPhotoGrid } from '../model/photo-grid.model';
+import { IPhotoGridInput, PhotoGridResponse } from '../types/photo-grid.type';
 
 // Fetch the photo grid for the given user id
 export const findPhotoGrid = async (
   email: string
-): Promise<IPhotoGrid | null> => {
-  return PhotoGrid.findOne({ email: email });
+): Promise<PhotoGridResponse | null> => {
+  const photoGrid: RawPhotoGrid | null = await PhotoGridModel.findOne({
+    email: email,
+  });
+
+  if (photoGrid) {
+    return convert(photoGrid);
+  }
+  return null;
 };
 
-// Create or update photo grid for an user
-export const upsertPhotoGrid = async (
+// Create new photo grid for the user
+export const createPhotoGrid = async (
   email: string,
   photoGrid: IPhotoGridInput
-): Promise<IPhotoGrid> => {
-  return PhotoGrid.findOneAndUpdate({ email: email }, photoGrid, {
-    upsert: true,
-    new: true,
+): Promise<PhotoGridResponse> => {
+  const isPhotoGridExist: RawPhotoGrid | null = await PhotoGridModel.findOne({
+    email: email,
   });
+
+  if (isPhotoGridExist) {
+    throw new AlreadyExistsException(
+      `Cannot create a new photo grid. User already has an existing photo grid`
+    );
+  }
+  const updatedPhotoGrid: RawPhotoGrid = await PhotoGridModel.create({
+    email: email,
+    grid: photoGrid.grid,
+  });
+  return convert(updatedPhotoGrid);
+};
+
+// Update photo grid of an user
+export const updatePhotoGrid = async (
+  email: string,
+  photoGrid: IPhotoGridInput
+): Promise<PhotoGridResponse> => {
+  const updatedPhotoGrid: RawPhotoGrid | null =
+    await PhotoGridModel.findOneAndUpdate({ email: email }, photoGrid, {
+      new: true,
+    });
+
+  if (!updatedPhotoGrid) {
+    throw new NotFoundException(
+      `No photo grid was found for the requested user`
+    );
+  }
+
+  return convert(updatedPhotoGrid);
+};
+
+// Mapping function to convert document object to PhotoGridResponse object
+const convert = (photoGrid: RawPhotoGrid): PhotoGridResponse => {
+  return {
+    email: photoGrid.email,
+    grid: photoGrid.grid.map((entry) => ({ id: entry.id, order: entry.order })),
+  };
 };

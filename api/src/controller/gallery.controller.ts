@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { get } from 'lodash';
 import HttpException from '../exceptions/HttpException';
-import { fetchImagesFromUrl } from '../service/user.service';
+import { fetchImagesFromUrl } from '../service/gallery.service';
 
 // Returns the uploaded photo lis of the logged in user
 export const getUploadedPhotosHandler = async (

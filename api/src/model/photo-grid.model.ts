@@ -1,13 +1,13 @@
 import { model, Schema, Model, Document } from 'mongoose';
 
-export interface IPhoto {
+export interface RawPhoto {
   id: string;
   order: number;
 }
 
-export interface IPhotoGrid extends Document {
+export interface RawPhotoGrid extends Document {
   email: string;
-  grid: Array<IPhoto>;
+  grid: Array<RawPhoto>;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -24,6 +24,6 @@ const PhotoGridSchema: Schema = new Schema(
   { timestamps: true }
 );
 
-const PhotoGrid: Model<IPhotoGrid> = model('PhotoGrid', PhotoGridSchema);
+const PhotoGridModel: Model<RawPhotoGrid> = model('PhotoGrid', PhotoGridSchema);
 
-export default PhotoGrid;
+export default PhotoGridModel;
