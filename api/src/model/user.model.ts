@@ -2,13 +2,7 @@ import { model, Schema, Model, Document } from 'mongoose';
 import bcrypt from 'bcrypt';
 import config from 'config';
 
-export interface IUserInput {
-  name: string;
-  password: string;
-  email: string;
-}
-
-export interface IUser extends Document {
+export interface RawUser extends Document {
   name: string;
   password: string;
   email: string;
@@ -32,7 +26,7 @@ const UserSchema: Schema = new Schema({
 });
 
 UserSchema.pre('save', async function (next) {
-  const user = this as IUser;
+  const user = this as RawUser;
   // Random additional data
   const salt = await bcrypt.genSalt(config.get('password.salt'));
   const hash = bcrypt.hashSync(user.password, salt);
@@ -45,11 +39,11 @@ UserSchema.pre('save', async function (next) {
 
 // Used for logging in
 UserSchema.methods.comparePassword = async function (password: string) {
-  const user = this as IUser;
+  const user = this as RawUser;
 
   return bcrypt.compare(password, user.password).catch((e: Error) => false);
 };
 
-const User: Model<IUser> = model('user', UserSchema);
+const UserModel: Model<RawUser> = model('user', UserSchema);
 
-export default User;
+export default UserModel;

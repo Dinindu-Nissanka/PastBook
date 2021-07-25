@@ -1,11 +1,11 @@
 import { AlreadyExistsException, NotFoundException } from '../exceptions';
 import PhotoGridModel, { RawPhotoGrid } from '../model/photo-grid.model';
-import { IPhotoGridInput, PhotoGridResponse } from '../types/photo-grid.type';
+import { IPhotoGridInput, PhotoGrid } from '../types/photo-grid.type';
 
 // Fetch the photo grid for the given user id
 export const findPhotoGrid = async (
   email: string
-): Promise<PhotoGridResponse | null> => {
+): Promise<PhotoGrid | null> => {
   const photoGrid: RawPhotoGrid | null = await PhotoGridModel.findOne({
     email: email,
   });
@@ -20,7 +20,7 @@ export const findPhotoGrid = async (
 export const createPhotoGrid = async (
   email: string,
   photoGrid: IPhotoGridInput
-): Promise<PhotoGridResponse> => {
+): Promise<PhotoGrid> => {
   const isPhotoGridExist: RawPhotoGrid | null = await PhotoGridModel.findOne({
     email: email,
   });
@@ -41,7 +41,7 @@ export const createPhotoGrid = async (
 export const updatePhotoGrid = async (
   email: string,
   photoGrid: IPhotoGridInput
-): Promise<PhotoGridResponse> => {
+): Promise<PhotoGrid> => {
   const updatedPhotoGrid: RawPhotoGrid | null =
     await PhotoGridModel.findOneAndUpdate({ email: email }, photoGrid, {
       new: true,
@@ -56,8 +56,8 @@ export const updatePhotoGrid = async (
   return convert(updatedPhotoGrid);
 };
 
-// Mapping function to convert document object to PhotoGridResponse object
-const convert = (photoGrid: RawPhotoGrid): PhotoGridResponse => {
+// Mapping function to convert document object to PhotoGrid object
+const convert = (photoGrid: RawPhotoGrid): PhotoGrid => {
   return {
     email: photoGrid.email,
     grid: photoGrid.grid.map((entry) => ({ id: entry.id, order: entry.order })),

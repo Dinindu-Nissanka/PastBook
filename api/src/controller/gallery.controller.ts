@@ -16,13 +16,13 @@ export const getUploadedPhotosHandler = async (
       throw new HttpException(401, 'Unauthorized');
     }
 
-    const photoGrid = await fetchImagesFromUrl(user.email);
+    const gallery = await fetchImagesFromUrl(user.email);
 
-    if (!photoGrid) {
+    if (!gallery) {
       return res.sendStatus(404);
     }
 
-    return res.send(photoGrid);
+    return res.send(gallery);
   } catch (error) {
     next(error);
   }

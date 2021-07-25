@@ -17,8 +17,8 @@
       "description": "API for ledger in the system"
     },
     {
-      "name": "User",
-      "description": "API for user in the system"
+      "name": "Gallery",
+      "description": "API for the photo gallery in the system"
     },
     {
       "name": "Auth",
@@ -36,7 +36,7 @@
     }
   },
   "paths": {
-    "/api/photogrid": {
+    "/api/v1/photogrid": {
       "get": {
         "tags": ["PhotoGrid"],
         "summary": "Get photo grid details",
@@ -75,8 +75,44 @@
       },
       "post": {
         "tags": ["PhotoGrid"],
-        "summary": "Create or update photo grid for a user",
-        "description": "Create or update photo grid for a user",
+        "summary": "Create a photo grid for a user",
+        "description": "Create a photo grid for a user",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PhotoGridDetails"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Authentication failed. No bearer token is provided",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["PhotoGrid"],
+        "summary": "Update photo grid for a user",
+        "description": "Update photo grid for a user",
         "security": [
           {
             "Bearer": []
@@ -110,7 +146,7 @@
         }
       }
     },
-    "/api/login": {
+    "/api/v1/login": {
       "post": {
         "tags": ["Auth"],
         "summary": "User login",
@@ -153,7 +189,7 @@
         }
       }
     },
-    "/api/signup": {
+    "/api/v1/signup": {
       "post": {
         "tags": ["Auth"],
         "summary": "User register",
@@ -196,16 +232,16 @@
         }
       }
     },
-    "/api/uploaded-images": {
+    "/api/v1/gallery": {
       "get": {
-        "tags": ["User"],
-        "summary": "Get uploaded images list of an user",
-        "description": "Get uploaded images list of an user",
+        "tags": ["Gallery"],
+        "summary": "Get photo gallery of an user",
+        "description": "Get photo gallery of an user",
         "responses": {
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/UploadedImages"
+              "$ref": "#/definitions/Gallery"
             }
           },
           "400": {
@@ -296,7 +332,7 @@
         }
       }
     },
-    "UploadedImages": {
+    "Gallery": {
       "type": "array",
       "items": {
         "properties": {

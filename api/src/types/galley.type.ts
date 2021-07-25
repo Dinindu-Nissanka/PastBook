@@ -8,7 +8,7 @@ interface Entry {
   timestamp: number;
 }
 
-export interface UploadedImagesResponse {
+export interface Gallery {
   id: number;
   code: string;
   startDate: number;

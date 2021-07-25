@@ -2,12 +2,12 @@ import axios from 'axios';
 import config from 'config';
 
 import { HttpException } from '../exceptions';
-import { UploadedImagesResponse } from '../types/galley.type';
+import { Gallery } from '../types/galley.type';
 
 // Fetch data from the given url
 export const fetchImagesFromUrl = async (
   email: string
-): Promise<UploadedImagesResponse | null> => {
+): Promise<Gallery | null> => {
   // This email should be validated against the response
   // or it should be used while fetching data
   // but since I have given a common url, this email parameter is not needed
@@ -18,7 +18,7 @@ export const fetchImagesFromUrl = async (
   } catch (error) {
     throw new HttpException(
       500,
-      'Error occurred while fetching uploaded images',
+      'Error occurred while fetching the uploaded images',
       error
     );
   }
