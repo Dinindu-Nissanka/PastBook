@@ -1,4 +1,4 @@
-import { upsertPhotoGrid } from './photo-grid.service';
+import { createPhotoGrid } from './photo-grid.service';
 import { connect, clearDatabase, closeDatabase } from '../test/db.helper';
 
 const photoGridData = {
@@ -63,12 +63,11 @@ describe('Photo grid service Test', () => {
   afterAll(async () => await closeDatabase());
 
   it('create and save photo grid successfully', async () => {
-    const savedPhotoGrid = await upsertPhotoGrid(
+    const savedPhotoGrid = await createPhotoGrid(
       'test@test.com',
       photoGridData
     );
 
-    expect(savedPhotoGrid._id).toBeDefined();
     expect(savedPhotoGrid.email).toBe(email);
     expect(savedPhotoGrid.grid.length).toBe(photoGridData.grid.length);
   });

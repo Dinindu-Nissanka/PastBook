@@ -21,25 +21,25 @@ describe('End to end testing', () => {
   afterAll(async () => await closeDatabase());
 
   it('returns unauthorized error when access token not provided in get uploaded images of an user', async () => {
-    const result = await request(app).get('/api/uploaded-images');
+    const result = await request(app).get('/api/v1/gallery');
     expect(result.text).toEqual('Unauthorized');
     expect(result.statusCode).toEqual(401);
   });
 
   it('returns unauthorized error when access token not provided in get uploaded photo grid of an user', async () => {
-    const result = await request(app).get('/api/photogrid');
+    const result = await request(app).get('/api/v1/photogrid');
     expect(result.text).toEqual('Unauthorized');
     expect(result.statusCode).toEqual(401);
   });
 
   it('returns unauthorized error when access token not provided in get uploaded images of an user', async () => {
-    const result = await request(app).post('/api/photogrid');
+    const result = await request(app).post('/api/v1/photogrid');
     expect(result.text).toEqual('Unauthorized');
     expect(result.statusCode).toEqual(401);
   });
 
   it('returns the jwt token for user sign up', async () => {
-    const result = await request(app).post('/api/signup').send({
+    const result = await request(app).post('/api/v1/signup').send({
       name: 'test',
       email: 'test@test.com',
       password: '12345678',
@@ -49,7 +49,7 @@ describe('End to end testing', () => {
   });
 
   it('returns the email validation error for user sign up', async () => {
-    const result = await request(app).post('/api/signup').send({
+    const result = await request(app).post('/api/v1/signup').send({
       name: 'test',
       email: 'testtest.com',
       password: '12345678',
@@ -59,7 +59,7 @@ describe('End to end testing', () => {
   });
 
   it('returns the password validation error in minimum number for user sign up', async () => {
-    const result = await request(app).post('/api/signup').send({
+    const result = await request(app).post('/api/v1/signup').send({
       name: 'test',
       email: 'test@test.com',
       password: '1234567',
@@ -71,7 +71,7 @@ describe('End to end testing', () => {
   });
 
   it('returns the password validation error in maximum number for user sign up', async () => {
-    const result = await request(app).post('/api/signup').send({
+    const result = await request(app).post('/api/v1/signup').send({
       name: 'test',
       email: 'test@test.com',
       password: '1234567123456',
@@ -83,7 +83,7 @@ describe('End to end testing', () => {
   });
 
   it('returns the user not found error for invalid user in user login', async () => {
-    const result = await request(app).post('/api/login').send({
+    const result = await request(app).post('/api/v1/login').send({
       email: 'test@test.com',
       password: '123456712',
     });

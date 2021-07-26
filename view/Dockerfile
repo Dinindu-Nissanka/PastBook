@@ -10,6 +10,7 @@ RUN npm install
 COPY src /usr/app/src
 COPY public /usr/app/public
 COPY tsconfig.json /usr/app/tsconfig.json
+COPY .env /usr/app/.env
 
 EXPOSE 3000
 

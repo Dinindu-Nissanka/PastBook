@@ -28,7 +28,7 @@ describe('User service Test', () => {
       name: 'Test user',
     });
 
-    expect(savedUser._id).toBeDefined();
+    expect(savedUser.name).toBeDefined();
     expect(savedUser.email).toBe(email);
   });
 });
